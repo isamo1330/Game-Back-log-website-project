@@ -3,6 +3,7 @@ import './App.css'
 
 function App() {
 const [games,setGames] = useState([]);
+const [titles,setTitles] = useState("");
 
 useEffect(() => {
 //fetch games from the Api
@@ -17,7 +18,7 @@ fetch('http://127.0.0.1:8000/api/games')
  <h2>Add a Game</h2>
  <div className="mb-3">
  <label className="form-label">Game title</label>
- <input type="text" className="form-control" /></div>
+ <input type="text" className="form-control" value={titles} onChange={(e) => setTitles(e.target.value)}  /></div>
  <div className="mb-3">
 <label className="form-label">Status</label>
 <select className="form-select">
