@@ -13,11 +13,15 @@ fetch('http://127.0.0.1:8000/api/games')
 .then(res=>res.json())
 .then(data=>setGames(data))
 }, [])
-
+const handleSubmit = (e) =>{
+e.preventDefault()  
+console.log(games,titles,hours,achievements,status)
+}
  return (
 <>
  <h1> Game Backlog</h1>
  <h2>Add a Game</h2>
+ <form onSubmit={handleSubmit}> 
  <div className="mb-3">
  <label className="form-label">Game title</label>
  <input type="text" className="form-control" value={titles} onChange={(e) => setTitles(e.target.value)}  /></div>
@@ -38,6 +42,7 @@ fetch('http://127.0.0.1:8000/api/games')
 <input type="number" className="form-control" value={achievements} onChange={(e) =>setAchievements(e.target.value)} />
 </div>
 <button type="submit" className="btn btn-primary">Add Game</button>
+</form>
    <div className="row">
     <div className="col-md-4">
   <h2>Finished</h2>
