@@ -4,7 +4,9 @@ import './App.css'
 function App() {
 const [games,setGames] = useState([]);
 const [titles,setTitles] = useState("");
-
+const [hours,setHours] = useState("");
+const [achievements,setAchievements] = useState("");
+const [status,setStatus] = useState("Finished")
 useEffect(() => {
 //fetch games from the Api
 fetch('http://127.0.0.1:8000/api/games')
@@ -21,7 +23,7 @@ fetch('http://127.0.0.1:8000/api/games')
  <input type="text" className="form-control" value={titles} onChange={(e) => setTitles(e.target.value)}  /></div>
  <div className="mb-3">
 <label className="form-label">Status</label>
-<select className="form-select">
+<select className="form-select" value={status} onChange={(e) =>setStatus(e.target.value)}>
 <option>Finished</option>
 <option>In Progress</option>
 <option>About to Start</option>
@@ -29,11 +31,11 @@ fetch('http://127.0.0.1:8000/api/games')
 </div>
 <div className="mb-3">
 <label className="form-label">Hours played</label>
-<input type="number" className="form-control" />
+<input type="number" className="form-control"  value={hours} onChange={(e) =>setHours(e.target.value)} />
 </div>
 <div className="mb-3">
 <label className="form-label">Achievements</label>
-<input type="number" className="form-control" />
+<input type="number" className="form-control" value={achievements} onChange={(e) =>setAchievements(e.target.value)} />
 </div>
 <button type="submit" className="btn btn-primary">Add Game</button>
    <div className="row">
