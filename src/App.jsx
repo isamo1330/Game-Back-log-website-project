@@ -14,7 +14,23 @@ fetch('http://127.0.0.1:8000/api/games')
 .then(data=>setGames(data))
 }, [])
 const handleSubmit = (e) =>{
-e.preventDefault()  
+ e.preventDefault()  
+ fetch('http://127.0.0.1:8000/api/games', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  body: JSON.stringify({
+    title: titles,
+    status: status,
+    hours_played: hours,
+    achievements: achievements
+  })
+})
+.then(res => res.json())
+.then(newGame => setGames([...games, newGame])) 
+ 
 console.log(games,titles,hours,achievements,status)
 }
  return (
