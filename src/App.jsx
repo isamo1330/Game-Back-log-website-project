@@ -29,8 +29,14 @@ const handleSubmit = (e) =>{
   })
 })
 .then(res => res.json())
-.then(newGame => setGames([...games, newGame])) 
- 
+.then(newGame => {
+  setGames([...games, newGame])
+  setTitles("")
+  setHours("")
+  setAchievements("")
+  setStatus("Finished")
+
+})
 console.log(games,titles,hours,achievements,status)
 }
  return (
