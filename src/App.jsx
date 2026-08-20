@@ -45,28 +45,28 @@ console.log(games,titles,hours,achievements,status)
  }).then(() => {setGames(games.filter(g => g.id !== id))})
  }
  return (
-<>
+<main>
  <h1> Game Backlog</h1>
  <h2>Add a Game</h2>
  <form onSubmit={handleSubmit}> 
  <div className="mb-3">
- <label className="form-label">Game title</label> 
- <input type="text" className="form-control" value={titles} onChange={(e) => setTitles(e.target.value)}  /></div>
+ <label htmlFor="title" className="form-label">Game title</label> 
+ <input id="title" type="text" className="form-control" value={titles} onChange={(e) => setTitles(e.target.value)}  /></div>
  <div className="mb-3">
-<label className="form-label">Status</label>
-<select className="form-select" value={status} onChange={(e) =>setStatus(e.target.value)}>
+<label htmlFor="status" className="form-label">Status</label>
+<select id="status" className="form-select" value={status} onChange={(e) =>setStatus(e.target.value)}>
 <option>Finished</option>
 <option>In Progress</option>
 <option>About to Start</option>
 </select>
 </div>
 <div className="mb-3">
-<label className="form-label">Hours played</label>
-<input type="number" className="form-control"  value={hours} onChange={(e) =>setHours(e.target.value)} />
+<label htmlFor="hours" className="form-label">Hours played</label>
+<input id="hours" type="number" className="form-control"  value={hours} onChange={(e) =>setHours(e.target.value)} />
 </div>
 <div className="mb-3">
-<label className="form-label">Achievements</label>
-<input type="number" className="form-control" value={achievements} onChange={(e) =>setAchievements(e.target.value)} />
+<label htmlFor="achievements" className="form-label">Achievements</label>
+<input id="achievements" type="number" className="form-control" value={achievements} onChange={(e) =>setAchievements(e.target.value)} />
 </div>
 <button type="submit" className="btn btn-primary">Add Game</button>
 </form>
@@ -82,7 +82,7 @@ console.log(games,titles,hours,achievements,status)
   {games.filter(g => g.status === "About to Start").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button></div>)}
 </div>
 </div>
-    </>
+    </main>
   )
 }
 
