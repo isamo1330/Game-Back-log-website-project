@@ -39,13 +39,18 @@ const handleSubmit = (e) =>{
 })
 console.log(games,titles,hours,achievements,status)
 }
+ const handleDelete =(id) => {
+ fetch('http://127.0.0.1:8000/api/games/' + id, {
+ method: 'DELETE'
+ }).then(() => {setGames(games.filter(g => g.id !== id))})
+ }
  return (
 <>
  <h1> Game Backlog</h1>
  <h2>Add a Game</h2>
  <form onSubmit={handleSubmit}> 
  <div className="mb-3">
- <label className="form-label">Game title</label>
+ <label className="form-label">Game title</label> 
  <input type="text" className="form-control" value={titles} onChange={(e) => setTitles(e.target.value)}  /></div>
  <div className="mb-3">
 <label className="form-label">Status</label>
@@ -68,13 +73,13 @@ console.log(games,titles,hours,achievements,status)
    <div className="row">
     <div className="col-md-4">
   <h2>Finished</h2>
- {games.filter(g => g.status === "Finished").map(g => <div key={g.id}>{g.title}</div>)}
+ {games.filter(g => g.status === "Finished").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button></div>)}
 </div><div className="col-md-4">
   <h2>In Progress</h2>
-   {games.filter(g => g.status === "In Progress").map(g => <div key={g.id}>{g.title}</div>)}
+   {games.filter(g => g.status === "In Progress").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button></div>)}
 </div><div className="col-md-4">
   <h2>About to Start</h2>
-  {games.filter(g => g.status === "About to Start").map(g => <div key={g.id}>{g.title}</div>)}
+  {games.filter(g => g.status === "About to Start").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button></div>)}
 </div>
 </div>
     </>
