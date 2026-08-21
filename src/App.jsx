@@ -7,16 +7,27 @@ const [titles,setTitles] = useState("");
 const [hours,setHours] = useState("");
 const [achievements,setAchievements] = useState("");
 const [status,setStatus] = useState("Finished")
+const [editingId, setEditingId] = useState(null)
+const startEdit = (game) => { 
+setTitles(game.title)
+setHours(game.hours_played)
+setStatus(game.status)
+setAchievements(game.achievements)
+setEditingId(game.id)
+}
 useEffect(() => {
 //fetch games from the Api
-fetch('http://127.0.0.1:8000/api/games')
+fetch('http://127.0.0.1:8000/api/games/')
 .then(res=>res.json())
 .then(data=>setGames(data))
 }, [])
 const handleSubmit = (e) =>{
- e.preventDefault()  
- fetch('http://127.0.0.1:8000/api/games', {
-  method: 'POST',
+ e.preventDefault()
+  if (editingId) {
+    // EDIT ROAD: replace an existing game
+ 
+ fetch('http://127.0.0.1:8000/api/games/'+ editingId, {
+  method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -29,16 +40,44 @@ const handleSubmit = (e) =>{
   })
 })
 .then(res => res.json())
-.then(newGame => {
-  setGames([...games, newGame])
+.then(updatedGame => {
+  setGames(games.map(g => g.id === editingId ? updatedGame : g))
+  setEditingId(null)
+ 
   setTitles("")
   setHours("")
   setAchievements("")
   setStatus("Finished")
 
 })
-console.log(games,titles,hours,achievements,status)
+return
+  }
+   // ADD ROAD
+  fetch('http://127.0.0.1:8000/api/games', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      title: titles,
+      status: status,
+      hours_played: hours,
+      achievements: achievements
+    })
+  })
+  .then(res => res.json())
+  .then(newGame => {
+    setGames([...games, newGame])
+    setTitles("")
+    setHours("")
+    setAchievements("")
+    setStatus("Finished")
+  })
 }
+
+
+
  const handleDelete =(id) => {
  fetch('http://127.0.0.1:8000/api/games/' + id, {
  method: 'DELETE'
@@ -73,13 +112,13 @@ console.log(games,titles,hours,achievements,status)
    <div className="row">
     <div className="col-md-4">
   <h2>Finished</h2>
- {games.filter(g => g.status === "Finished").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button></div>)}
+ {games.filter(g => g.status === "Finished").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button> <button onClick={() => startEdit(g)}>edit</button></div>)}
 </div><div className="col-md-4">
   <h2>In Progress</h2>
-   {games.filter(g => g.status === "In Progress").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button></div>)}
+   {games.filter(g => g.status === "In Progress").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button> <button onClick={() => startEdit(g)}>edit</button></div>)}
 </div><div className="col-md-4">
   <h2>About to Start</h2>
-  {games.filter(g => g.status === "About to Start").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button></div>)}
+  {games.filter(g => g.status === "About to Start").map(g => <div key={g.id}>{g.title}<button onClick={() => handleDelete(g.id)}>delete</button> <button onClick={() => startEdit(g)}>edit</button></div>)}
 </div>
 </div>
     </main>
