@@ -8,6 +8,7 @@ const [hours,setHours] = useState("");
 const [achievements,setAchievements] = useState("");
 const [status,setStatus] = useState("Finished")
 const [editingId, setEditingId] = useState(null)
+const [error, setError] = useState(null)
 const startEdit = (game) => { 
 setTitles(game.title)
 setHours(game.hours_played)
@@ -18,10 +19,22 @@ setEditingId(game.id)
 useEffect(() => {
 //fetch games from the Api
 fetch('http://127.0.0.1:8000/api/games/')
-.then(res=>res.json())
-.then(data=>setGames(data))
+.then(res => {
+      if (!res.ok) {
+      res.json().then(errBody => setError(errBody.message))
+      return
+      }
+       return res.json()
+       })
+
+.then(data => {
+  if (!data) return
+  setGames(data)
+})
+.catch(() => setError("Can't reach the server is it running?")) 
 }, [])
 const handleSubmit = (e) =>{
+setError(null)
  e.preventDefault()
   if (editingId) {
     // EDIT ROAD: replace an existing game
@@ -39,8 +52,16 @@ const handleSubmit = (e) =>{
     achievements: achievements
   })
 })
-.then(res => res.json())
+.then(res => {
+      if (!res.ok) {
+      res.json().then(errBody => setError(errBody.message))
+      return
+      }
+       return res.json()
+       })
+       
 .then(updatedGame => {
+  if (!updatedGame) return 
   setGames(games.map(g => g.id === editingId ? updatedGame : g))
   setEditingId(null)
  
@@ -50,8 +71,11 @@ const handleSubmit = (e) =>{
   setStatus("Finished")
 
 })
+.catch(() => setError("Can't reach the server is it running?"))
+
 return
   }
+   
    // ADD ROAD
   fetch('http://127.0.0.1:8000/api/games', {
     method: 'POST',
@@ -66,26 +90,47 @@ return
       achievements: achievements
     })
   })
-  .then(res => res.json())
-  .then(newGame => {
+  .then(res => {
+      if (!res.ok) {
+      res.json().then(errBody => setError(errBody.message))
+      return
+      }
+       return res.json()
+       })
+
+  .then(newGame => { if (!newGame) return
     setGames([...games, newGame])
     setTitles("")
     setHours("")
     setAchievements("")
     setStatus("Finished")
   })
+  .catch(() => setError("Can't reach the server is it running?"))
 }
+
+
+
 
 
 
  const handleDelete =(id) => {
  fetch('http://127.0.0.1:8000/api/games/' + id, {
  method: 'DELETE'
- }).then(() => {setGames(games.filter(g => g.id !== id))})
+ }).then(res => {
+      if (!res.ok) {
+      res.json().then(errBody => setError(errBody.message))
+      return
+      }
+        setGames(games.filter(g => g.id !== id))
+       })
+ .catch(() => setError("Can't reach the server is it running?"))
+ 
  }
+ 
  return (
 <main>
  <h1> Game Backlog</h1>
+ {error && <div className="alert alert-danger">{error}</div>}
  <h2>Add a Game</h2>
  <form onSubmit={handleSubmit}> 
  <div className="mb-3">
