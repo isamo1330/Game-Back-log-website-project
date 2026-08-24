@@ -16,6 +16,13 @@ setStatus(game.status)
 setAchievements(game.achievements)
 setEditingId(game.id)
 }
+const cancelEdit = () => {
+setEditingId(null)
+setTitles("")
+setHours("")
+setAchievements("")
+setStatus("Finished")
+}  
 useEffect(() => {
 //fetch games from the Api
 fetch('http://127.0.0.1:8000/api/games/')
@@ -153,6 +160,7 @@ return
 <input id="achievements" type="number" className="form-control" value={achievements} onChange={(e) =>setAchievements(e.target.value)} />
 </div>
 <button type="submit" className="btn btn-primary">Add Game</button>
+{editingId && <button type="button" className="btn btn-secondary" onClick={cancelEdit}>Cancel</button>}
 </form>
    <div className="row">
     <div className="col-md-4">
