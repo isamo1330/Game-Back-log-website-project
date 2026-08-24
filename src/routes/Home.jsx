@@ -166,13 +166,13 @@ return
     <div className="col-md-4">
   <h2>Finished</h2>
  
- {games.filter(g => g.status === "Finished").map(g => <div key={g.id}>{g.title}<button className="btn btn-danger btn-sm" onClick={() => handleDelete(g.id)}>delete</button><button className="btn btn-secondary btn-sm" onClick={() => startEdit(g)}>edit</button></div>)}
+ {games.filter(g => g.status === "Finished").map(g => <div key={g.id}>{g.title}<button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(g.id)}>delete</button><button className="btn btn-secondary btn-sm ms-2" onClick={() => startEdit(g)}>edit</button></div>)}
   </div><div className="col-md-4">
   <h2>In Progress</h2>
- {games.filter(g => g.status === "In Progress").map(g => <div key={g.id}>{g.title}<button className="btn btn-danger btn-sm" onClick={() => handleDelete(g.id)}>delete</button><button className="btn btn-secondary btn-sm" onClick={() => startEdit(g)}>edit</button></div>)}
+ {games.filter(g => g.status === "In Progress").map(g => <div key={g.id}>{g.title}<button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(g.id)}>delete</button><button className="btn btn-secondary btn-sm ms-2" onClick={() => startEdit(g)}>edit</button></div>)}
 </div><div className="col-md-4">
   <h2>About to Start</h2>
-  {games.filter(g => g.status === "About to Start").map(g => <div key={g.id}>{g.title}<button className="btn btn-danger btn-sm" onClick={() => handleDelete(g.id)}>delete</button><button className="btn btn-secondary btn-sm" onClick={() => startEdit(g)}>edit</button></div>)}
+  {games.filter(g => g.status === "About to Start").map(g => <div key={g.id}>{g.title}<button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(g.id)}>delete</button><button className="btn btn-secondary btn-sm ms-2" onClick={() => startEdit(g)}>edit</button></div>)}
  
 </div>
 </div>
