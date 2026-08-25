@@ -135,7 +135,7 @@ return
  }
  
  return (
-<main>
+<main className="container mt-3">
  <h1> Game Backlog</h1>
  {error && <div className="alert alert-danger">{error}</div>}
  <h2>Add a Game</h2>
