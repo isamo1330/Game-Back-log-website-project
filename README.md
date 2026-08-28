@@ -1,16 +1,15 @@
-# React + Vite
+# Game Backlog Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Front end for the Game Backlog Tracker. Built with React (Vite) and Bootstrap.
+API: https://github.com/isamo1330/Game-back-log-api — the API must be running for the app to work.
 
-Currently, two official plugins are available:
+## Requirements
+- Node.js
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Setup
+1. `git clone https://github.com/isamo1330/Game-Back-log-website-project.git` then `cd Game-Back-log-website-project`
+2. `npm install`
+3. `npm run dev` app runs at http://localhost:5173
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Testing
+The front end is tested with Vitest and React Testing Library. There are four component tests: home test, empty submit test, edit test and about test. Run them with `npm test`, or `npm run coverage` for a coverage report.
